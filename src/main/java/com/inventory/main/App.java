@@ -1,39 +1,26 @@
 package com.inventory.main;
 
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import com.inventory.util.HibernateUtil;
-import com.inventory.util.ProductQueries;
+import com.inventory.dao.ProductDAO;
+import com.inventory.entity.Product;
 
 public class App {
 
     public static void main(String[] args) {
 
-        SessionFactory factory = HibernateUtil.getSessionFactory();
-        Session session = factory.openSession();
+        ProductDAO dao = new ProductDAO();
 
-        // Insert sample data
-        ProductQueries.loadSampleProducts(session);
+        Product p1 = new Product("Laptop", "Gaming Laptop", 75000, 10);
+        Product p2 = new Product("Mouse", "Wireless Mouse", 1200, 50);
 
-        // Sorting
-        ProductQueries.sortProductsByPriceAscending(session);
-        ProductQueries.sortProductsByPriceDescending(session);
-        ProductQueries.sortProductsByQuantityDescending(session);
+        dao.saveProduct(p1);
+        dao.saveProduct(p2);
 
-        // Pagination
-        ProductQueries.getPaginatedProducts(session, 1, 3);
+        Product fetched = dao.getProduct(1);
+        System.out.println("Fetched Product: " + fetched.getName());
 
-        // Aggregation
-        ProductQueries.countTotalProducts(session);
-        ProductQueries.findMinMaxPrice(session);
+        dao.updateProduct(1, 72000, 8);
+        dao.deleteProduct(2);
 
-        // Filter
-        ProductQueries.filterProductsByPriceRange(session, 20, 100);
-
-        // LIKE
-        ProductQueries.findProductsStartingWith(session, "D");
-
-        session.close();
-        factory.close();
+        System.out.println("CRUD Operations Completed!");
     }
 }

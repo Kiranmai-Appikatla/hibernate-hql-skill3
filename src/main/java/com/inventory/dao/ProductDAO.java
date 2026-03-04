@@ -2,6 +2,7 @@ package com.inventory.dao;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+
 import com.inventory.entity.Product;
 import com.inventory.util.HibernateUtil;
 
@@ -11,7 +12,7 @@ public class ProductDAO {
         Session session = HibernateUtil.getSessionFactory().openSession();
         Transaction tx = session.beginTransaction();
 
-        session.persist(product);   // ✅ use persist instead of save
+        session.persist(product);
 
         tx.commit();
         session.close();
@@ -29,7 +30,7 @@ public class ProductDAO {
         Transaction tx = session.beginTransaction();
 
         Product product = session.get(Product.class, id);
-        if (product != null) {
+        if(product != null){
             product.setPrice(price);
             product.setQuantity(quantity);
         }
@@ -43,8 +44,8 @@ public class ProductDAO {
         Transaction tx = session.beginTransaction();
 
         Product product = session.get(Product.class, id);
-        if (product != null) {
-            session.remove(product);   // ✅ use remove instead of delete
+        if(product != null){
+            session.remove(product);
         }
 
         tx.commit();
