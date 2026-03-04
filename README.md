@@ -22,4 +22,4 @@ This project demonstrates advanced HQL operations including:
 4. Execute queries from `HQLDemo` class
 
 ## Author
-[Your Name]
+Kiranmai Appikatla
